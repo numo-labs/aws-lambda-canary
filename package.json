@@ -1,0 +1,33 @@
+{
+  "name": "aws-lambda-canary",
+  "version": "1.0.0",
+  "description": "AWS lambda canary project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "s3-deploy": "gulp deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/numo-labs/aws-lambda-canary.git"
+  },
+  "author": "Jimmy Ruts",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/numo-labs/aws-lambda-canary/issues"
+  },
+  "homepage": "https://github.com/numo-labs/aws-lambda-canary",
+  "devDependencies": {
+    "archiver": "^0.21.0",
+    "aws-sdk": "^2.2.29",
+    "gulp": "^3.9.0",
+    "gulp-install": "^0.6.0",
+    "gulp-zip": "^3.0.2"
+  },
+  "includeFilesS3": [
+    "index.js"
+  ],
+  "dependencies": {
+    "starwars": "^1.0.0"
+  }
+}
