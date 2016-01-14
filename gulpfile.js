@@ -6,6 +6,9 @@ var runSequence = require('run-sequence');
 var packageJson = require('./package.json');
 var region = 'eu-west-1';
 
+/**
+ * Adds the project files to the archive folder.
+ */
 gulp.task('js', function () {
   return gulp.src('index.js')
     .pipe(gulp.dest('dist/'));
