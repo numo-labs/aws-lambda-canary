@@ -29,6 +29,7 @@
     "index.js"
   ],
   "dependencies": {
+    "request": "^2.67.0",
     "starwars": "^1.0.0"
   }
 }

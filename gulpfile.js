@@ -7,14 +7,14 @@ var packageJson = require('./package.json');
 var region = 'eu-west-1';
 var fs = require('fs');
 
-var functionName = 'testlambdaagain';
+var functionName = packageJson.name;
 var outputName = packageJson.name + '.zip';
 
 /**
  * Adds the project files to the archive folder.
  */
 gulp.task('js', function () {
-  return gulp.src(['index.js'])
+  return gulp.src(['index.js', 'script/'])
     .pipe(gulp.dest('dist/'));
 });
 
@@ -38,7 +38,7 @@ gulp.task('zip', function () {
 });
 
 /**
- *  Upload the archive to S3 bucket (numo-labs-lambda/{packageJson.name})
+ *  update or create the lambda functon
  */
 gulp.task('upload', function() {
   AWS.config.region = region;
