@@ -42,6 +42,8 @@ gulp.task('zip', function () {
  */
 gulp.task('upload', function() {
   AWS.config.region = region;
+  var lambda = new AWS.Lambda();
+  var zipFile = './' + outputName;
 
   lambda.getFunction({ FunctionName: functionName }, function(err, data) {
     if (err) createFunction();
@@ -49,9 +51,12 @@ gulp.task('upload', function() {
   });
 
   function createFunction () {
+
+    console.log(outputName);
+
     var params = {
       Code: {
-        ZipFile: outputName
+        ZipFile: zipFile
       },
       FunctionName: functionName,
       Handler: 'index.handler',
@@ -66,9 +71,12 @@ gulp.task('upload', function() {
   }
 
   function updateFunction () {
+
+    console.log(zipFile);
+
     var params = {
       FunctionName: functionName,
-      ZipFile: outputName
+      ZipFile: zipFile
     };
 
     lambda.updateFunctionCode(params, function(err, data) {
