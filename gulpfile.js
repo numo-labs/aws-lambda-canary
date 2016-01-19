@@ -5,12 +5,16 @@ var install = require('gulp-install');
 var runSequence = require('run-sequence');
 var packageJson = require('./package.json');
 var region = 'eu-west-1';
+var fs = require('fs');
+
+var functionName = packageJson.name;
+var outputName = packageJson.name + '.zip';
 
 /**
  * Adds the project files to the archive folder.
  */
 gulp.task('js', function () {
-  return gulp.src('index.js')
+  return gulp.src(['index.js'])
     .pipe(gulp.dest('dist/'));
 });
 
@@ -29,7 +33,7 @@ gulp.task('node-mods', function () {
  */
 gulp.task('zip', function () {
   return gulp.src(['dist/**/*', '!dist/package.json'])
-    .pipe(zip(packageJson.name + '.zip'))
+    .pipe(zip(outputName))
     .pipe(gulp.dest('./'));
 });
 
@@ -38,16 +42,40 @@ gulp.task('zip', function () {
  */
 gulp.task('upload', function() {
   AWS.config.region = region;
-  var s3 = new AWS.S3();
-  var params = {
-    Bucket: 'numo-labs-lambda/' + packageJson.name,
-    Key: packageJson.name + '.zip'
+
+  lambda.getFunction({ FunctionName: functionName }, function(err, data) {
+    if (err) createFunction();
+    else updateFunction();
+  });
+
+  function createFunction () {
+    var params = {
+      Code: {
+        ZipFile: outputName
+      },
+      FunctionName: functionName,
+      Handler: 'index.handler',
+      Role: 'arn:aws:iam::847002989232:role/lambdafull',
+      Runtime: 'nodejs'
+    };
+
+    lambda.createFunction (params, function (err, data) {
+      if (err) console.error(err);
+      else console.log('Function ' + functionName + ' has been created.');
+    });
   }
 
-  s3.putObject(params, function (err, data) {
-    if (err) throw err;
-    else console.log('Uploaded ' + packageJson.name + '.zip to s3');
-  })
+  function updateFunction () {
+    var params = {
+      FunctionName: functionName,
+      ZipFile: outputName
+    };
+
+    lambda.updateFunctionCode(params, function(err, data) {
+      if (err) console.error(err);
+      else console.log('Function ' + functionName + ' has been updated.');
+    });
+  }
 });
 
 gulp.task('deploy', function (callback) {
