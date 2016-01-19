@@ -7,7 +7,7 @@ var packageJson = require('./package.json');
 var region = 'eu-west-1';
 var fs = require('fs');
 
-var functionName = packageJson.name;
+var functionName = 'testlambdaagain';
 var outputName = packageJson.name + '.zip';
 
 /**
@@ -52,38 +52,49 @@ gulp.task('upload', function() {
 
   function createFunction () {
 
-    console.log(outputName);
+    getZipFile(function (data) {
+      var params = {
+        Code: {
+          ZipFile: data
+        },
+        FunctionName: functionName,
+        Handler: 'index.handler',
+        Role: 'arn:aws:iam::847002989232:role/lambdafull',
+        Runtime: 'nodejs'
+      };
 
-    var params = {
-      Code: {
-        ZipFile: zipFile
-      },
-      FunctionName: functionName,
-      Handler: 'index.handler',
-      Role: 'arn:aws:iam::847002989232:role/lambdafull',
-      Runtime: 'nodejs'
-    };
-
-    lambda.createFunction (params, function (err, data) {
-      if (err) console.error(err);
-      else console.log('Function ' + functionName + ' has been created.');
+      lambda.createFunction (params, function (err, data) {
+        if (err) console.error(err);
+        else console.log('Function ' + functionName + ' has been created.');
+      });
     });
+
   }
 
   function updateFunction () {
 
-    console.log(zipFile);
+    getZipFile(function (data) {
+      var params = {
+        FunctionName: functionName,
+        ZipFile: data
+      };
 
-    var params = {
-      FunctionName: functionName,
-      ZipFile: zipFile
-    };
-
-    lambda.updateFunctionCode(params, function(err, data) {
-      if (err) console.error(err);
-      else console.log('Function ' + functionName + ' has been updated.');
+      lambda.updateFunctionCode(params, function(err, data) {
+        if (err) console.error(err);
+        else console.log('Function ' + functionName + ' has been updated.');
+      });
     });
   }
+
+  function getZipFile (next) {
+    fs.readFile(zipFile, function (err, data) {
+          if (err) console.log(err);
+          else {
+            next(data);
+          }
+    });
+  }
+
 });
 
 gulp.task('deploy', function (callback) {
