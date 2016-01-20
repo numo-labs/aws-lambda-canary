@@ -14,7 +14,7 @@ var outputName = packageJson.name + '.zip';
  * Adds the project files to the archive folder.
  */
 gulp.task('js', function () {
-  return gulp.src(['index.js', 'script/'])
+  return gulp.src(['index.js'])
     .pipe(gulp.dest('dist/'));
 });
 
