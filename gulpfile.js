@@ -7,14 +7,22 @@ var packageJson = require('./package.json');
 var region = 'eu-west-1';
 var fs = require('fs');
 
-var functionName = packageJson.name;
+var functionName = packageJson.name + '-v' + getMajorVersion(packageJson.version);
+
+function getMajorVersion (version) {
+  return version.substring(0, version.indexOf('.'));
+}
+
 var outputName = packageJson.name + '.zip';
+
+var IAMRole = 'arn:aws:iam::847002989232:role/lambdafull';
+var filesToPack = ['./index.js', './lib/**/*.*'];
 
 /**
  * Adds the project files to the archive folder.
  */
 gulp.task('js', function () {
-  return gulp.src(['index.js', 'script/'])
+  return gulp.src(filesToPack, {base: './'})
     .pipe(gulp.dest('dist/'));
 });
 
@@ -32,7 +40,7 @@ gulp.task('node-mods', function () {
  * Create an archive based on the dest folder.
  */
 gulp.task('zip', function () {
-  return gulp.src(['dist/**/*', '!dist/package.json'])
+  return gulp.src(['dist/**/*'])
     .pipe(zip(outputName))
     .pipe(gulp.dest('./'));
 });
@@ -59,7 +67,7 @@ gulp.task('upload', function() {
         },
         FunctionName: functionName,
         Handler: 'index.handler',
-        Role: 'arn:aws:iam::847002989232:role/lambdafull',
+        Role: IAMRole,
         Runtime: 'nodejs'
       };
 

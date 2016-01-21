@@ -1,9 +1,10 @@
 var starwars = require('starwars');
-var configChecker = require('./scripts/configChecker');
+var config = require('./lib/config');
 
 exports.handler = function (event, context) {
   // Check config
-  var config = configChecker.init(context);
-
-  context.succeed(starwars());
+  config.init(context, function (config) {
+    console.log(config);
+    context.succeed(starwars());
+  });
 }
