@@ -23,13 +23,13 @@ var filesToPack = ['./index.js', './lib/**/*.*'];
  * Adds the project files to the archive folder.
  */
 gulp.task('js', function () {
-   return gulp.src(filesToPack, {base: './'})
+  return gulp.src(filesToPack, {base: './'})
      .pipe(babel({
        presets: ['es2015'],
        plugins: ['transform-runtime']
      }))
      .pipe(gulp.dest('dist/'));
- });
+});
 
 /**
  * This task will copy all the required dependencies to
