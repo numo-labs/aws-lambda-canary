@@ -48,18 +48,17 @@ gulp.task('zip', function () {
 /**
  *  update or create the lambda functon
  */
-gulp.task('upload', function() {
+gulp.task('upload', function () {
   AWS.config.region = region;
   var lambda = new AWS.Lambda();
   var zipFile = './' + outputName;
 
-  lambda.getFunction({ FunctionName: functionName }, function(err, data) {
+  lambda.getFunction({ FunctionName: functionName }, function (err, data) {
     if (err) createFunction();
     else updateFunction();
   });
 
   function createFunction () {
-
     getZipFile(function (data) {
       var params = {
         Code: {
@@ -71,23 +70,21 @@ gulp.task('upload', function() {
         Runtime: 'nodejs'
       };
 
-      lambda.createFunction (params, function (err, data) {
+      lambda.createFunction(params, function (err, data) {
         if (err) console.error(err);
         else console.log('Function ' + functionName + ' has been created.');
       });
     });
-
   }
 
   function updateFunction () {
-
     getZipFile(function (data) {
       var params = {
         FunctionName: functionName,
         ZipFile: data
       };
 
-      lambda.updateFunctionCode(params, function(err, data) {
+      lambda.updateFunctionCode(params, function (err, data) {
         if (err) console.error(err);
         else console.log('Function ' + functionName + ' has been updated.');
       });
@@ -96,13 +93,12 @@ gulp.task('upload', function() {
 
   function getZipFile (next) {
     fs.readFile(zipFile, function (err, data) {
-          if (err) console.log(err);
-          else {
-            next(data);
-          }
+      if (err) console.log(err);
+      else {
+        next(data);
+      }
     });
   }
-
 });
 
 gulp.task('deploy', function (callback) {
