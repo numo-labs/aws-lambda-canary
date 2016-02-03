@@ -4,7 +4,7 @@
   "description": "AWS lambda canary project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "semistandard",
     "s3-deploy": "gulp deploy"
   },
   "repository": {
@@ -24,7 +24,8 @@
     "gulp-install": "^0.6.0",
     "gulp-zip": "^3.0.2",
     "node-lambda": "^0.7.1",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "semistandard": "^7.0.5"
   },
   "includeFilesS3": [
     "index.js"
