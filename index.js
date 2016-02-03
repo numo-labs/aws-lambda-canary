@@ -6,9 +6,9 @@ exports.handler = function (event, context) {
   contextHandler.init(context);
   config.init(context, function (err, config) {
     if (err) {
-      contextHandler.fail(err)
+      contextHandler.fail(err);
     } else {
-      starwarsService.quote()
-    };
+      starwarsService.quote();
+    }
   });
 };
