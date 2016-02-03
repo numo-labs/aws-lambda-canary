@@ -9,4 +9,4 @@ exports.handler = function (event, context) {
   // config.init(context, function (err, config) {
   //   if (err) context.fail(err);
   // });
-}
+};
