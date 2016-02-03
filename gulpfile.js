@@ -15,7 +15,7 @@ function getMajorVersion (version) {
 
 var outputName = packageJson.name + '.zip';
 
-var IAMRole = 'arn:aws:iam::685330956565:role/lambda_basic_execution';
+var IAMRole = 'arn:aws:iam::685330956565:role/lambdafull';
 var filesToPack = ['./index.js', './lib/**/*.*'];
 
 /**
