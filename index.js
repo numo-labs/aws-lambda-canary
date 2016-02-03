@@ -1,5 +1,5 @@
 var config = require('./lib/config');
-var starwarsService = require ('./lib/starwars-service');
+var starwarsService = require('./lib/starwars-service');
 var contextHandler = require('./lib/context-handler');
 
 exports.handler = function (event, context) {
@@ -7,7 +7,7 @@ exports.handler = function (event, context) {
 
   config.init(context, function (err, config) {
     if (err) contextHandler.fail(err);
-    
+
     starwarsService.quote();
   });
 };
