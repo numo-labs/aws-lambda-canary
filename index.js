@@ -6,7 +6,7 @@ var contextEmitter = require('./lib/context-emitter');
 
 exports.handler = function (event, context) {
   contextEmitter.init(context);
-  config.init(context, function (err, config) {
-    if (err) context.fail(err);
-  });
+  // config.init(context, function (err, config) {
+  //   if (err) context.fail(err);
+  // });
 }
