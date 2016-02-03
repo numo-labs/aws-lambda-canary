@@ -108,7 +108,8 @@ gulp.task('test-invoke', function () {
     FunctionName: functionName,
     InvocationType: 'RequestResponse',
     LogType: 'Tail',
-    Payload: '{ "key1" : "name" }'
+    Payload: '{ "key1" : "name" }',
+    Qualifier: 'ci' // see: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Lambda.html#invoke-property
   };
 
   lambda.getFunction({ FunctionName: functionName }, function (err, data) {
