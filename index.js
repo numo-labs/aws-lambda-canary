@@ -5,6 +5,7 @@ var contextEmitter = require('./lib/context-emitter');
 exports.handler = function (event, context) {
   console.log('starting canary lambda');
   contextEmitter.init(context);
+  starwarsService.quote();
   // config.init(context, function (err, config) {
   //   if (err) context.fail(err);
   // });
