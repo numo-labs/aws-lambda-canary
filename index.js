@@ -1,10 +1,10 @@
 var config = require('./lib/config');
 var starwarsService = require ('./lib/starwars-service');
-var contextEmitter = require('./lib/context-emitter');
+var contextHandler = require('./lib/context-handler');
 
 exports.handler = function (event, context) {
-  console.log('starting canary lambda');
-  contextEmitter.init(context);
+  contextHandler.init(context);
+
   starwarsService.quote();
   // config.init(context, function (err, config) {
   //   if (err) context.fail(err);
