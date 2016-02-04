@@ -4,4 +4,7 @@
     "describe": false,
     "it": false
   }
+  "rules": {
+    "no-multi-spaces": 0
+  }
 }
