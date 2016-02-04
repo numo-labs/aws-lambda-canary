@@ -5,7 +5,7 @@ var contextHandler = require('./lib/context-handler');
 exports.handler = function (event, context) {
   contextHandler.init(context);
 
-  config.init(context, function (err, config) {
+  config.init(context, event.stage, function (err, config) {
     if (err) contextHandler.fail(err);
 
     starwarsService.quote();
