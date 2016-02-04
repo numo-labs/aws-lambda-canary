@@ -3,7 +3,7 @@ var assert         = require('assert');
 var index          = require('../index.js');
 var contextCreator = require('./utils/mockContext.js');
 
-describe('Handler:', function () {
+describe('Lambda Handler Tests', function () {
   it('Calls context.succeed with quote', function (done) {
     function test (result) {
       assert(result.length > 5);
