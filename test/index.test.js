@@ -4,21 +4,29 @@ var index          = require('../index.js');
 var contextCreator = require('./utils/mockContext.js');
 
 describe('Lambda Handler Tests', function () {
-  it('Calls context.succeed with quote', function (done) {
+  it('error: context:done called without a quote when the event isHuman property is false', function (done) {
+    function test (error) {
+      assert.equal(error, "Sorry you're not a human");
+      done();
+    }
+    var context = contextCreator(test);
+    index.handler({ isHuman: false }, context);
+  });
+  it('success: context.succeed called with quote when the event isHuman property is true', function (done) {
     function test (result) {
       assert(result.length > 5);
       done();
     }
     var context = contextCreator(test);
-    index.handler({}, context);
+    index.handler({ isHuman: true }, context);
   });
-  it('Calls context:fail with error when no functionARN specified', function (done) {
+  it('error: context:fail called with error when no functionARN specified in the context object', function (done) {
     function test (error) {
       assert.equal(error, 'Environments are not correctly configured.');
       done();
     }
-    var context1 = contextCreator(test);
-    delete context1.invokedFunctionArn;
-    index.handler({}, context1);
+    var context = contextCreator(test);
+    delete context.invokedFunctionArn;
+    index.handler({ isHuman: true }, context);
   });
 });
