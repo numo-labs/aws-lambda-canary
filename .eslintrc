@@ -1,7 +1,17 @@
 {
   "extends" : "semistandard",
-  "globals": {
-    "describe": false,
-    "it": false
+  "rules": {
+    "semi": [2, "always"],
+    "no-extra-semi": 2,
+    "semi-spacing": [2, { "before": false, "after": true }],
+    "space-before-function-paren": 0,
+    "padded-blocks": 0,
+    "space-after-keywords": 0,
+    "indent": 0
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
   }
 }
