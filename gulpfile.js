@@ -1,5 +1,6 @@
 var AWS = require('aws-sdk');
 var gulp = require('gulp');
+var babel = require('gulp-babel');
 var zip = require('gulp-zip');
 var install = require('gulp-install');
 var runSequence = require('run-sequence');
@@ -23,7 +24,11 @@ var filesToPack = ['./index.js', './lib/**/*.*'];
  */
 gulp.task('js', function () {
   return gulp.src(filesToPack, {base: './'})
-    .pipe(gulp.dest('dist/'));
+     .pipe(babel({
+       presets: ['es2015'],
+       plugins: ['transform-runtime']
+     }))
+     .pipe(gulp.dest('dist/'));
 });
 
 /**
