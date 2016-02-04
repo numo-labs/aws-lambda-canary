@@ -1,7 +1,0 @@
-{
-  "extends" : "semistandard",
-  "globals": {
-    "describe": false,
-    "it": false
-  }
-}
