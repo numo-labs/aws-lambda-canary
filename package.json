@@ -44,8 +44,9 @@
     "starwars": "^1.0.0"
   },
   "semistandard": {
-    "ignore": [
-      "/test/"
+    "globals": [
+      "describe",
+      "it"
     ]
   }
 }
