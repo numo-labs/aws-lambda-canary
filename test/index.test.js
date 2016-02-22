@@ -17,7 +17,7 @@ describe('Lambda Handler Tests', function () {
       console.log('>>>> e:', typeof e, e.message);
 
       // console.log('>>>> error:', typeof error, error);
-      assert.equal(e['message'], "Sorry you're not a human");
+      assert.equal(e['message'], "Sorry, these are not the quotes you're looking for.");
       done();
     }
     var context = mockContextCreator(ctxOpts, test);

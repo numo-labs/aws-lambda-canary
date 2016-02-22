@@ -16,7 +16,8 @@ function getMajorVersion (version) {
 
 var outputName = packageJson.name + '.zip';
 
-var IAMRole = process.env.IAM_ROLE;
+// var IAMRole = process.env.IAM_ROLE;
+
 var filesToPack = ['./index.js', './lib/**/*.*'];
 
 /**
@@ -71,13 +72,15 @@ gulp.task('upload', function () {
         },
         FunctionName: functionName,
         Handler: 'index.handler',
-        Role: IAMRole,
+        Role: process.env.IAM_ROLE,
         Runtime: 'nodejs'
       };
 
       lambda.createFunction(params, function (err, data) {
         if (err) console.error(err);
-        else console.log('Function ' + functionName + ' has been created.');
+        else {
+          console.log('Function ' + functionName + ' has been created.');
+        }
       });
     });
   }
@@ -91,7 +94,12 @@ gulp.task('upload', function () {
 
       lambda.updateFunctionCode(params, function (err, data) {
         if (err) console.error(err);
-        else console.log('Function ' + functionName + ' has been updated.');
+        else {
+          console.log('Function ' + functionName + ' has been updated.');
+          console.log(data);
+          // after the function has been updated we invoke it!
+          testInvoke();
+        }
       });
     });
   }
@@ -106,7 +114,8 @@ gulp.task('upload', function () {
   }
 });
 
-gulp.task('test-invoke', function () {
+// gulp.task('test-invoke', function () {
+function testInvoke () {
   var lambda = new AWS.Lambda();
 
   var params = {
@@ -128,14 +137,15 @@ gulp.task('test-invoke', function () {
       else console.log(data);
     });
   }
-});
+}
+// });
 
 gulp.task('deploy', function (callback) {
   return runSequence(
     ['js', 'node-mods'],
     ['zip'],
     ['upload'],
-    ['test-invoke'],
+    // ['test-invoke'],
     callback
   );
 });
