@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "deploy": "node ./node_modules/dpl/dpl.js",
+    "test-invoke":"node ./invoke.js",
     "nocov": "node ./node_modules/.bin/mocha --compilers js:babel-register test/index.test.js",
     "semistandard": "semistandard",
     "test": "semistandard && npm run coverage",
