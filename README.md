@@ -32,7 +32,8 @@ Environment Variables set:
 
 + AWS_ACCESS_KEY_ID
 + AWS_SECRET_ACCESS_KEY
-+ IAM_ROLE
++ AWS_IAM_ROLE
++ AWS_REGION
 
 Copy/paste this export list into your text editor,
 add the appropriate values (*request form project lead if you don't have them*),
