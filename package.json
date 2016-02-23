@@ -6,11 +6,12 @@
   "scripts": {
     "start": "node index.js",
     "deploy": "node ./node_modules/dpl/dpl.js",
-    "test-invoke":"node ./invoke.js",
+    "test-invoke": "node ./invoke.js",
     "nocov": "node ./node_modules/.bin/mocha --compilers js:babel-register test/index.test.js",
     "semistandard": "semistandard",
     "test": "semistandard && npm run coverage",
-    "coverage": "./node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha test/index.test.js --report lcovonly -- -R spec"
+    "coverage": "./node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha test/index.test.js --report lcovonly -- -R spec",
+    "check-coverage": "npm run coverage && node_modules/.bin/babel-istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100"
   },
   "files_to_deploy": [
     "package.json",
@@ -92,5 +93,9 @@
       "brace-style": 0,
       "no-trailing-spaces": 0
     }
-  }
+  },
+  "pre-commit": [
+    "semistandard",
+    "check-coverage"
+  ]
 }

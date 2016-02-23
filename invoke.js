@@ -8,7 +8,7 @@ function getMajorVersion (version) {
 }
 
 function testInvoke () {
-  var functionName = pkg.name + '-v' + getMajorVersion(pkg.version)
+  var functionName = pkg.name + '-v' + getMajorVersion(pkg.version);
   var params = {
     FunctionName: functionName,
     InvocationType: 'RequestResponse',
