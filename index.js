@@ -1,5 +1,4 @@
 var starwarsService = require('./lib/starwars-service');
-// var config          = require('./lib/config.js');
 
 exports.handler = function (event, context) {
   starwarsService.quote(event.isHuman, function (err, message) {
